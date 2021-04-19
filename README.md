@@ -3,6 +3,7 @@
 Projeto da disciplina de SSC0713 - Sistemas Evolutivos Aplicados à Robótica oferecida no Primeiro Semestre de 2021.
 
 Grupo:
+
 Luan Icaro Pinto Arcanjo.
 
 Rodrigo Cesar Arboleda.
