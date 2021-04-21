@@ -55,6 +55,13 @@ void Arrow::Move(const double time)
     this->time += time;
 
     this->x = this->initX+this->velocityX*this->time;
+    
+    if (this->x > this->xColision)
+    {
+        this->x = this->xColision;
+        this->status = true;
+    }
+
     this->y = this->velocityY*this->time + ((this->gravity*(this->time*this->time))/2) + this->initY;
 
 
