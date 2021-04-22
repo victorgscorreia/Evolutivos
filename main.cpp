@@ -3,8 +3,7 @@
 #else
     #include <GL/glut.h>
 #endif
-#include <iostream>
-#include <math.h>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -18,7 +17,6 @@ typedef struct _circle{
   float radius;
   float x;
   float y;
-  float theta;
   float r,g,b;
 }Circle;
 
@@ -27,7 +25,14 @@ typedef struct _target{
   bool hit;
 }Target;
 
-Target t = {{0.07,new_x,new_y,0,1,0,0}, {0.05,new_x,new_y,0,1,1,1}, {0.03,new_x,new_y,0,0,0,1}, {0.01,new_x,new_y,0,1,1,1}, false};
+typedef struct _arrow{
+  float x;
+  float y;
+}Arrow;
+
+Target t = {{0.07,new_x,new_y,1,0,0}, {0.05,new_x,new_y,1,1,1}, {0.03,new_x,new_y,0,0,1}, {0.01,new_x,new_y,1,1,1}, false};
+
+vector<Arrow> r = {{0,0},{-0.3,-0.7},{0.6,-0.9},{-0.4,0.8}};
 
 void drawCircle(Circle circle){
   
@@ -46,21 +51,36 @@ void drawCircle(Circle circle){
 }
 
 void drawTarget(Target t){
+
+    t.t1 = {0.07,new_x,new_y,1,0,0};
+    t.t2 = {0.05,new_x,new_y,1,1,1};
+    t.t3 = {0.03,new_x,new_y,0,0,1};
+    t.t4 = {0.01,new_x,new_y,1,1,1};
+
     drawCircle(t.t1);
     drawCircle(t.t2);
     drawCircle(t.t3);
     drawCircle(t.t4);
 }
 
+void drawArrow(vector<Arrow> r){
+
+  glColor3f(1, 1, 1);
+
+  glBegin(GL_LINE_STRIP);
+  for (int i = 0; i < int(r.size()); i++) {
+    glVertex2d(r[i].x, r[i].y);
+  }
+  glEnd();
+
+}
+
 void draw(){
   glClear(GL_COLOR_BUFFER_BIT);
-
-  t.t1 = {0.07,new_x,new_y,0,1,0,0};
-  t.t2 = {0.05,new_x,new_y,0,1,1,1};
-  t.t3 = {0.03,new_x,new_y,0,0,0,1};
-  t.t4 = {0.01,new_x,new_y,0,1,1,1};
+  glClearColor(0, 0, 0, 1.0);
 
   drawTarget(t);
+  drawArrow(r);
 
   glutSwapBuffers();
 }
@@ -69,7 +89,7 @@ void mouse(int button, int state, int x, int y){
   if(button==GLUT_LEFT_BUTTON && state==GLUT_DOWN){
 
     glClear(GL_COLOR_BUFFER_BIT);
-    glClearColor(1, 1, 1, 1.0);
+    glClearColor(0, 0, 0, 1.0);
 
     new_x = -0.9 + (rand()%180)/100.0f;
     new_y = (rand()%90)/100.0f;
@@ -114,10 +134,6 @@ void hitTarget(){
   t.hit = rand()%2;
 }
 
-void drawArrow(){
-
-}
-
 //------------------ Timer -----------------//
 void timer(int){
   // Essa função é chamada em loop, é aqui que realizaremos as animações
@@ -129,6 +145,7 @@ void timer(int){
   if(t.hit == true){
     changeTarget();
   }
+
   //moveTarget(&t, 0.005);
 
   // Executa a função draw para desenhar novamente
@@ -146,12 +163,10 @@ int main(int argc, char** argv){
     glutInitWindowSize(windowWidth, windowHeight);
     glutInitWindowPosition(0, 0);
     glutCreateWindow("Teste");
-    glClearColor(1.0, 1.0, 1.0, 1.0);
+    glClearColor(0, 0, 0, 1.0);
     glutDisplayFunc(draw);
     glutTimerFunc(0, timer, 0); // Define qual será a função de loop
     glutMouseFunc(mouse);
-    
-    
     
     glutMainLoop();
 
