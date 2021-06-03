@@ -17,9 +17,9 @@ private:
     int circ4Color[4];
 
 public:
-    Target(double x, double y, double radius1, double radius2, double radius3, double radius4, int *circ1Color, int *circ2Color, int *circ3Color, int *circ4Color);
+    Target(coordenadas* coord, int vertice_inicial, int num_vertices, double x, double y, double tx, double ty, double s, double theta, double radius1, double radius2, double radius3, double radius4);
     ~Target();
-    int draw();
+    int draw(GLint loc_color, GLint loc_matriz);
     double randPosX(unsigned int seed);
     double randPosY(unsigned int seed);
     int checkColision(double yArrow);

@@ -1,6 +1,6 @@
 #include "Arrow.h"
 #include <iostream>
-Arrow::Arrow(const double x,const double y,const double angle,const double velocity, double gravity, Target* targetLocal) : Object(x, y)
+Arrow::Arrow(int vertice_inicial, int num_vertices, double x, double y, double tx, double ty, double s, double theta, const double angle,const double velocity, double gravity, Target* targetLocal) : Object(vertice_inicial, num_vertices, x, y, tx, ty, s, theta)
 {
     this->initX = x;
     this->initY = y;

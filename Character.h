@@ -6,7 +6,7 @@
 class Character : private Object
 {
 public:
-    Character(double x, double y);
+    Character(int vertice_inicial, int num_vertices, double x, double y, double tx, double ty, double s, double theta);
     ~Character();
     int draw();
 };

@@ -1,7 +1,7 @@
-flags = -lglut -lGLU -lGL -Wall
+flags = -lglfw -lGL -lGLEW -lm
 
 all: 
-	g++ main.cpp -o main $(flags)
+	g++ base.cpp Object.cpp Target.cpp mainTest.cpp -o run $(flags)
 
 run: 
-	./main
+	./run
