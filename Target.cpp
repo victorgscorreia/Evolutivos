@@ -1,4 +1,5 @@
 #include "Target.h"
+#include <iostream>
 
 Target::Target(coordenadas* coord, int vertice_inicial, int num_vertices, double x, double y, double tx, double ty, double s, double theta, double radius1, double radius2, double radius3, double radius4) : Object(vertice_inicial, num_vertices, x, y, tx, ty, s, theta)
 {
@@ -61,23 +62,24 @@ double Target::randPosY(unsigned int seed)
 
 int Target::checkColision(double yArrow)
 {
+    //std::cout << this->y + this->radius4 << std::endl;
 
-    if (yArrow <= this->y + this->radius4 && yArrow >= this->y - this->radius4)
+    if (yArrow <= this->y + this->radius4 * 1.6 && yArrow >= this->y - this->radius4 * 1.6)
     {
         return 4;
     }
 
-    if (yArrow <= this->y + this->radius3 && yArrow >= this->y - this->radius3)
+    if (yArrow <= this->y + this->radius3 * 1.6 && yArrow >= this->y - this->radius3 * 1.6)
     {
         return 3;
     }
 
-    if (yArrow <= this->y + this->radius2 && yArrow >= this->y - this->radius2)
+    if (yArrow <= this->y + this->radius2 * 1.6 && yArrow >= this->y - this->radius2 * 1.6)
     {
         return 2;
     }
     
-    if (yArrow <= this->y + this->radius1 && yArrow >= this->y - this->radius1)
+    if (yArrow <= this->y + this->radius1 * 1.6 && yArrow >= this->y - this->radius1 * 1.6)
     {
         return 1;
     }

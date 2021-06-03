@@ -21,9 +21,9 @@ private:
     bool status;
 
 public:
-    Arrow(int vertice_inicial, int num_vertices, double x, double y, double tx, double ty, double s, double theta, double angle, double velocity, double gravity, Target* targetLocal);
+    Arrow(coordenadas* vertices, int vertice_inicial, int num_vertices, double x, double y, double tx, double ty, double s, double theta, double velocity, double gravity, Target* targetLocal);
     ~Arrow();
-    int draw();
+    int draw(GLint loc_color, GLint loc_matriz);
     void Move(double time);
     bool GetStatus();
     int GetScore();

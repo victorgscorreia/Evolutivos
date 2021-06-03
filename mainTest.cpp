@@ -1,4 +1,5 @@
 #include "Target.h"
+#include "Arrow.h"
 #include <string>
 #include <iostream>
 
@@ -117,13 +118,14 @@ int main(void){
     glUseProgram(program);
 
     // Preparando dados para enviar a GPU
-    coordenadas vertices[128];
+    coordenadas vertices[2000];
     GLuint buffer;
     glGenBuffers(1, &buffer);
     glBindBuffer(GL_ARRAY_BUFFER, buffer);
 
     /*chamando as funcoes de criar os objetos e atualizando atual*/
     Target *alvo = new Target(vertices, 0, 128, 0.5, 0.5, 0, 0, 1, 0, 0.08, 0.06, 0.04, 0.02);
+    Arrow *flecha = new Arrow(vertices, 128, 14, -0.5, 0, 0, 0, 0.5, 1, 1.26598, 1, alvo);
 
     // Abaixo, nós enviamos todo o conteúdo da variável vertices.
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
@@ -141,6 +143,8 @@ int main(void){
     // Exibindo nossa janela
     glfwShowWindow(window);
 
+    std::cout << flecha->GetScore() << std::endl;
+
     while (!glfwWindowShouldClose(window))
     {
 
@@ -150,6 +154,8 @@ int main(void){
         glClearColor(1.0, 1.0, 1.0, 1.0);
 
         alvo->draw(loc_color, loc_matriz);
+        flecha->Move(0.017);
+        flecha->draw(loc_color, loc_matriz);
 
         glfwSwapBuffers(window);
         
