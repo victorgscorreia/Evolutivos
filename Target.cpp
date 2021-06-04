@@ -1,5 +1,4 @@
 #include "Target.h"
-#include <iostream>
 
 /*
 Construtor da classe alvo
