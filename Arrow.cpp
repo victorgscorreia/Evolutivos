@@ -1,35 +1,46 @@
 #include "Arrow.h"
 #include <iostream>
 
-Arrow::Arrow(coordenadas* vertices, int vertice_inicial, int num_vertices, double x, double y, double tx, double ty, double s, double theta, const double velocity, double gravity, Target* targetLocal) : Object(vertice_inicial, num_vertices, x, y, tx, ty, s, theta)
+Arrow::Arrow(coordenadas* vertices, int vertice_inicial, int num_vertices, double x, double y, double tx, double ty, double s, double theta, const double velocity, double gravity, Target* targetLocal, Obstacle* obstacle) : Object(vertice_inicial, num_vertices, x, y, tx, ty, s, theta)
 {
-    this->initX = x;
-    this->initY = y;
+    this->initX = tx;
+    this->initY = ty;
+    this->targetLocal = targetLocal;
+    this->obstacle = obstacle;
+    this->gravity = gravity*(-1);
+    this->xColision = 1;
     this->velocityX = velocity*cos(theta);
     this->velocityY = velocity*sin(theta);
-    this->gravity = gravity*(-1);
-    this->status = false;
-    this->targetLocal = targetLocal;
+    this->status = false;    
     this->time = 0;
 
-    double xTarget = targetLocal->getX();
-    double timeColisionTarget = ((xTarget-this->initX)/velocityX);
-    double yTarget = this->initY+(this->velocityY*timeColisionTarget)+((this->gravity*(timeColisionTarget*timeColisionTarget))/2);
-    //std::cout << yTarget << "\n";
-    this->score = this->targetLocal->checkColision(yTarget);
-    
-    if (this->score > 0)
-    {
-        this->xColision = xTarget;
-    }
+    double xObstacle = obstacle->getX();
 
-    else
-    {
-
-        double delta = (this->velocityY*this->velocityY)-(2.0*this->gravity*(-1.0-this->initY));
     
-        double timeColisionGround = (((this->velocityY*(-1.0))-sqrt(delta))/this->gravity);
-        this->xColision = this->initX + (this->velocityX*timeColisionGround);
+    double timeColisionObstacle = ((xObstacle-this->initX)/velocityX);
+    double yObstacle = this->initY+(this->velocityY*timeColisionObstacle)+((this->gravity*(timeColisionObstacle*timeColisionObstacle))/2);
+    
+    int hit = this->obstacle->checkColision(yObstacle);
+    
+    if(hit){
+        this->xColision = xObstacle;
+        this->score = 0;
+        
+    }else{
+        /*
+            verificando a colisao com o target
+        */
+        double xTarget = targetLocal->getX();
+        double timeColisionTarget = ((xTarget-this->initX)/velocityX);
+
+        double yTarget = this->initY+(this->velocityY*timeColisionTarget)+((this->gravity*(timeColisionTarget*timeColisionTarget))/2);
+        
+        this->score = this->targetLocal->checkColision(yTarget);
+        
+        if (this->score > 0)
+        {
+            this->xColision = xTarget;
+        }
     }
 
     int atual = this->vertice_inicial;
@@ -93,7 +104,48 @@ Arrow::Arrow(coordenadas* vertices, int vertice_inicial, int num_vertices, doubl
     vertices[atual].y = -0.04f;
     atual++;
 
+
     this->num_vertices = atual - this->vertice_inicial;
+
+    return;
+}
+
+void Arrow::Update(double theta, double velocity){
+    this->tx = this->initX;
+    this->ty = this->initY;
+    this->velocityX = velocity*cos(theta);
+    this->velocityY = velocity*sin(theta);
+    this->status = false;    
+    this->time = 0;
+    this->xColision = 1;
+    double xObstacle = obstacle->getX();
+
+    
+    double timeColisionObstacle = ((xObstacle-this->initX)/velocityX);
+    double yObstacle = this->initY+(this->velocityY*timeColisionObstacle)+((this->gravity*(timeColisionObstacle*timeColisionObstacle))/2);
+    
+    int hit = this->obstacle->checkColision(yObstacle);
+    
+    if(hit){
+        this->xColision = xObstacle;
+        this->score = 0;
+        
+    }else{
+        /*
+            verificando a colisao com o target
+        */
+        double xTarget = targetLocal->getX();
+        double timeColisionTarget = ((xTarget-this->initX)/velocityX);
+
+        double yTarget = this->initY+(this->velocityY*timeColisionTarget)+((this->gravity*(timeColisionTarget*timeColisionTarget))/2);
+        
+        this->score = this->targetLocal->checkColision(yTarget);
+        
+        if (this->score > 0)
+        {
+            this->xColision = xTarget;
+        }
+    }
 
     return;
 }
@@ -139,13 +191,8 @@ void Arrow::Move(const double time)
     {
         this->tx = this->xColision;
         this->status = true;
-    }
-    else if(this->ty <= -1){
+    }else if(this->ty <= -1){
         this->ty = -1;
-        this->status = true;
-    }
-    else if(this->tx >= 1){
-        this->tx = 1;
         this->status = true;
     }
 
@@ -162,7 +209,7 @@ bool Arrow::GetStatus()
     return this->status;
 }
 
-int Arrow::GetScore()
+double Arrow::GetScore()
 {
     return this->score;
 }

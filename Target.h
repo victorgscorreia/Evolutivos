@@ -22,7 +22,7 @@ public:
     int draw(GLint loc_color, GLint loc_matriz);
     double randPosX(unsigned int seed);
     double randPosY(unsigned int seed);
-    int checkColision(double yArrow);
+    double checkColision(double yArrow);
     double getX();
     double getY();
 };

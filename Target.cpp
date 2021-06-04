@@ -60,30 +60,19 @@ double Target::randPosY(unsigned int seed)
     return 0;
 }
 
-int Target::checkColision(double yArrow)
+double Target::checkColision(double yArrow)
 {
     //std::cout << this->y + this->radius4 << std::endl;
-
-    if (yArrow <= this->y + this->radius4 * 1.6 && yArrow >= this->y - this->radius4 * 1.6)
-    {
-        return 4;
-    }
-
-    if (yArrow <= this->y + this->radius3 * 1.6 && yArrow >= this->y - this->radius3 * 1.6)
-    {
-        return 3;
-    }
-
-    if (yArrow <= this->y + this->radius2 * 1.6 && yArrow >= this->y - this->radius2 * 1.6)
-    {
-        return 2;
-    }
     
     if (yArrow <= this->y + this->radius1 * 1.6 && yArrow >= this->y - this->radius1 * 1.6)
     {
-        return 1;
+
+        double dist = this->y  - yArrow;
+        if(dist < 0) dist = -dist;
+
+        
+        return 5.0 - dist;
     }
-    
     return 0;
 }
 
