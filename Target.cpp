@@ -71,7 +71,7 @@ double Target::checkColision(double yArrow)
         if(dist < 0) dist = -dist;
 
         
-        return 5.0 - dist;
+        return (5.0 - dist*dist)/5.0;
     }
     return 0;
 }
