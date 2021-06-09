@@ -96,4 +96,11 @@ Faz a multiplicao de duas matrizes 4x4 e retorna o seu resultado
 */
 void mult_matrix(float* matrix1, float* matrix2, float* matrix_result);
 
+/*
+Esta funcao retorna um double randomico entre [0,1]
+@RETORNO
+    double - double gerado
+*/
+double rand_double();
+
 #endif

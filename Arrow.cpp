@@ -168,6 +168,7 @@ na animacao
 */
 void Arrow::Move(const double time)
 {
+    double time_temp;
     //verifica se a flecha ja colidiu
     if (GetStatus())
     {
@@ -177,7 +178,7 @@ void Arrow::Move(const double time)
     
     // adiciona o tempo para a flecha
     this->time += time;
-    
+    time_temp = this->time; 
     //calcula a nova posicao em x
     this->tx = this->initX+this->velocityX*this->time;
     
@@ -185,6 +186,12 @@ void Arrow::Move(const double time)
     if (this->tx > this->xColision)
     {
         this->tx = this->xColision;
+
+
+        //calculando ty baseado no tx
+        time_temp = (this->tx - this->initX)/this->velocityX;
+
+
         this->status = true;
     }
 
@@ -196,7 +203,7 @@ void Arrow::Move(const double time)
     }
 
     // calcula y
-    this->ty = this->velocityY*this->time + ((this->gravity*(this->time*this->time))/2) + this->initY;
+    this->ty = this->velocityY*time_temp + ((this->gravity*(time_temp*time_temp))/2) + this->initY;
 
     // faz o calculo do angulo da flecha no ponto
     double tangente = (this->velocityY + (this->gravity*this->tx) - (this->gravity*this->initX))/this->velocityX;

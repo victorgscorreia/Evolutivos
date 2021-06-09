@@ -146,3 +146,13 @@ void mult_matrix(float* matrix1, float* matrix2, float* matrix_result)
 
     return;
 }
+
+/*
+Esta funcao retorna um double randomico entre [0,1]
+@RETORNO
+    double - double gerado
+*/
+double rand_double(){
+    double ret = (1.0*rand())/(1.0*RAND_MAX);
+    return ret;
+}

@@ -19,22 +19,29 @@ Construtor da classe alvo
 OBS: alterar os parametro de translacao rotacao e escala nao alteram as propriedades do alvo na simulacao
         somente de forma visual.
 */
-Target::Target(coordenadas* coord, int vertice_inicial, int num_vertices, double x, double y, double tx, double ty, double s, double theta, double radius1, double radius2, double radius3, double radius4) : Object(vertice_inicial, num_vertices, x, y, tx, ty, s, theta)
+Target::Target(coordenadas* coord, int vertice_inicial, int num_vertices, double x, double y, double tx, double ty, double s, double theta, double radius1, double radius2, double radius3, double radius4, double hp_ini) : Object(vertice_inicial, num_vertices, x, y, tx, ty, s, theta)
 {
     this->radius1 = radius1;
     this->radius2 = radius2;
     this->radius3 = radius3;
     this->radius4 = radius4;
 
+    this->hp_ini = hp_ini;
+    this->hp = hp_ini;
+
+
     int atual = this->vertice_inicial;
 
-    add_elipse(coord, atual, 32, x, y, radius1);
+    this->tx = this->x;
+    this->ty = this->y;
+
+    add_elipse(coord, atual, 32, 0, 0, radius1);
     atual += 32;
-    add_elipse(coord, atual, 32, x, y, radius2);
+    add_elipse(coord, atual, 32, 0, 0, radius2);
     atual += 32;
-    add_elipse(coord, atual, 32, x, y, radius3);
+    add_elipse(coord, atual, 32, 0, 0, radius3);
     atual += 32;
-    add_elipse(coord, atual, 32, x, y, radius4);
+    add_elipse(coord, atual, 32, 0, 0, radius4);
 
     return;
 }
@@ -94,10 +101,38 @@ double Target::checkColision(double yArrow)
         double dist = this->y  - yArrow;
         if(dist < 0) dist = -dist;
 
-        
-        return (5.0 - dist*dist)/5.0;
+        double score = (this->radius1*1.6 - dist)/(this->radius1*1.6);        
+
+        this->hp -= score;
+
+        return score;
+
     }
     return 0;
+}
+
+/*
+Retorna o valor do hp do alvo
+@RETORNO
+    double hp - valor do hp do alvo
+*/
+double Target::getHP(){
+    return this->hp;
+}
+
+/*
+Retorna se o alvo esta morto ou nao, se estiver
+sua vida sera setada para o valor inicial
+@RETORNO
+    bool - se o alvo esta morto
+*/
+bool Target::isDead(){
+    if(this->hp <= 0){
+        this->hp = this->hp_ini;
+        return true;
+    }
+
+    return false;
 }
 
 /*
@@ -110,6 +145,8 @@ double Target::getX()
     return this->x;
 }
 
+
+
 /*
 Retorna o valor da coordenada y do alvo
 @RETORNO
@@ -118,4 +155,26 @@ Retorna o valor da coordenada y do alvo
 double Target::getY()
 {
     return this->y;
+}
+
+/*
+Seta o valor de x, com base no parametro passado
+@RETORNO
+    double x - valor a qual o atributo x seta setado.
+*/
+void Target::setX(double x)
+{
+    this->x = x;
+    this->tx = x;
+}
+
+/*
+Seta o valor de y, com base no parametro passado
+@RETORNO
+    double y - valor a qual o atributo y seta setado.
+*/
+void Target::setY(double y)
+{
+    this->y = y;
+    this->ty = y;
 }

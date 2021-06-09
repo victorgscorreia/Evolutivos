@@ -11,6 +11,9 @@ private:
     double radius3;
     double radius4;
 
+    double hp_ini;
+    double hp;
+
 public:
     /*
     Construtor da classe target
@@ -31,7 +34,7 @@ public:
     OBS: alterar os parametro de translacao rotacao e escala nao alteram as propriedades do alvo na simulacao
          somente de forma visual.
     */
-    Target(coordenadas* coord, int vertice_inicial, int num_vertices, double x, double y, double tx, double ty, double s, double theta, double radius1, double radius2, double radius3, double radius4);
+    Target(coordenadas* coord, int vertice_inicial, int num_vertices, double x, double y, double tx, double ty, double s, double theta, double radius1, double radius2, double radius3, double radius4, double hp_ini);
    
     ~Target();
 
@@ -56,6 +59,21 @@ public:
                      - 0 < score <= 1 pontuacao feita
     */
     double checkColision(double yArrow);
+
+    /*
+    Retorna o valor do hp do alvo
+    @RETORNO
+        double hp - valor do hp do alvo
+    */
+    double getHP();
+
+    /*
+    Retorna se o alvo esta morto ou nao, se estiver
+    sua vida sera setada para o valor inicial
+    @RETORNO
+        bool - se o alvo esta morto
+    */
+    bool isDead();
     
     /*
     Retorna o valor da coordenada x do alvo
@@ -70,6 +88,20 @@ public:
         double y - valor da coordenada y do alvo
     */
     double getY();
+
+    /*
+    Seta o valor de x, com base no parametro passado
+    @RETORNO
+        double x - valor a qual o atributo x seta setado.
+    */
+    void setX(double x);
+
+    /*
+    Seta o valor de y, com base no parametro passado
+    @RETORNO
+        double y - valor a qual o atributo y seta setado.
+    */
+    void setY(double y);    
 };
 
 #endif
