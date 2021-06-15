@@ -109,35 +109,6 @@ individuo cruzamento(individuo mom, individuo dad){
  
     return child;
 }
- 
-/*
-Esta funcao avalia todos os individuos de uma geracao, e armazena no 
-vetor a media dos scores e o score do melhor de todos.
-@PARAMETROS
-    std::vector<individuo> &generation - geracao a ser avaliada
-    std:vector<double> &best_of_generation - vetor que armazena o score do melhor de todos das geracoes
-    std::vector<double> &mean_of_generation - vetor que armazena a media dos score de cada geracao
-*/
-void evaluate_generation(std::vector<individuo> &generation, std::vector<double> &best_of_generation, std::vector<double> &mean_of_generation){
-    double best = 0;
-    double mean = 0;
-    //iterando sobre os individuos
-    for(int i = 0; i < TAM_GERACAO; i++){
-        double theta = generation[i].theta;
-        double velocity = generation[i].velocity;
-        generation[i].arrow->Update(theta, velocity);
-        //adicionando a media
-        mean += generation[i].arrow->GetScore();
-        //comparando com o melhor atual
-        best = std::max(best , generation[i].arrow->GetScore());
-    }
-    //armazenando a media e o melhor de todos
-    mean /= TAM_GERACAO;
-    best_of_generation.push_back( best );
-    change_mutation_tax(best_of_generation);
-    mean_of_generation.push_back(mean);
-}
-
 ```
 ## Membros
 - Luan Icaro Pinto Arcanjo.
