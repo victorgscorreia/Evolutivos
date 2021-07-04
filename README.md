@@ -1,5 +1,7 @@
 # Evolutivos
 O projeto consiste em um jogo de arco-e-flecha no qual um algoritmo evolutivo precisa aprender os parâmetros para acertar o alvo.
+## Vídeo
+[Link](https://youtu.be/mw0i_W02k7A)
 ## Funcionamento do jogo
 O jogo consiste em uma alvo no qual possui uma vida, ao acertar uma flecha no alvo ele perde uma parte desta vida. Quando o alvo chega em zero, é gerado um novo alvo com a vida cheia. O dano ao alvo depende do local onde foi acertado, sendo o dano maior que zero e podendo chegar até um se acertar no centro do alvo. A vida pode ser alterada no arquivo main.cpp:
 ```
